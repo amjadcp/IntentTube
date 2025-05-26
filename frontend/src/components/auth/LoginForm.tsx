@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { AuthService } from "./auth.service";
+import { AuthService } from "../../services/auth.service";
 
 export function LoginForm({
   className,

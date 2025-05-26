@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { AuthService } from './auth.service';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { AuthService } from "../services/auth.service";
 
 interface IAuthContext {
   isAuthenticated: boolean;
@@ -9,7 +15,9 @@ interface IAuthContext {
 
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -34,6 +42,6 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) throw new Error('useAuth must be used within an AuthProvider');
+  if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
-}; 
+};

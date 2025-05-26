@@ -26,8 +26,9 @@ const ChannelsList = () => {
     try {
       const data = await ChannelsService.getCuratedChannels();
       setChannels(data.selectedChannels || []);
-    } catch (err: any) {
-      setError(err.message || "Error fetching channels");
+    } catch (err: unknown) {
+      if (err instanceof Error)
+        setError(err.message || "Error fetching channels");
     } finally {
       setLoading(false);
     }
@@ -38,8 +39,9 @@ const ChannelsList = () => {
     try {
       const data = await ChannelsService.removeChannel(channelId);
       setChannels(data.selectedChannels || []);
-    } catch (err: any) {
-      setError(err.message || "Error removing channel");
+    } catch (err: unknown) {
+      if (err instanceof Error)
+        setError(err.message || "Error removing channel");
     } finally {
       setRemoving(null);
     }

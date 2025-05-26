@@ -1,8 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import LoginPage from './features/auth/LoginPage';
-import { AuthProvider } from './features/auth/AuthProvider';
-import ChannelsList from './features/channels/ChannelsList';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import LoginPage from "./features/auth/LoginPage";
+import { AuthProvider } from "./features/auth/AuthProvider";
+import ChannelsList from "./features/channels/ChannelsList";
 
 const App: React.FC = () => {
   return (

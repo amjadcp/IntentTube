@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ChannelCard from "../components/channels/ChannelCard";
 import { ChannelsService } from "../services/channels.service";
 import AddChannelPopup from "@/components/channels/AddChannelPopup";
+import { ChannelListCard } from "@/components/channels/ChannelListCard";
 
 interface Channel {
   channelId: string;
@@ -74,6 +75,13 @@ const ChannelsList = () => {
       {removing && (
         <div className="text-gray-500 mt-2">Removing channel...</div>
       )}
+      <div className="grid grid-cols-3 gap-3 my-5">
+        {Array.from({ length: 6 }, (_, id) => (
+          <div key={id}>
+            <ChannelListCard />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

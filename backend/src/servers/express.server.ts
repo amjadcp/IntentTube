@@ -2,9 +2,10 @@ import express from 'express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import session from 'express-session';
 import passport from '../configs/passport.config';
-import { SESSION_SECRET } from '../configs/env.config';
+import { FRONTEND_DOMAIN, SESSION_SECRET } from '../configs/env.config';
 import authenticationRouter from '../features/authentication/authentication.router';
 import v1Router from '../routers/v1.router';
 import healthRouter from '../routers/health.router';
@@ -19,6 +20,13 @@ app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// CORS
+app.use(cors({
+  origin: FRONTEND_DOMAIN,
+  optionsSuccessStatus: 200,  // some legacy browsers (IE11, various SmartTVs) choke on 204
+  credentials: true,
+}));
 
 // Session and Passport
 app.use(

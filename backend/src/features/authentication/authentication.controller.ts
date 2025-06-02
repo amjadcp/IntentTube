@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import passport from '../../configs/passport.config';
 import { VerifyCallback } from 'passport-google-oauth20';
 import { AuthenticationService } from './authentication.service';
+import { FRONTEND_DOMAIN } from '../../configs/env.config';
 
 export class AuthenticationController {
   static googleSignIn(req: Request, res: Response, next: NextFunction) {
@@ -23,7 +24,7 @@ export class AuthenticationController {
       // Redirect or respond as 
       console.log('User authenticated:', user);
       
-      return res.redirect('/'); // TODO: Redirect to frontend dashboard
+      return res.redirect(FRONTEND_DOMAIN);
     })(req, res, next);
   }
 

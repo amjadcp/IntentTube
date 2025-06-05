@@ -1,0 +1,33 @@
+{
+  "name": "intenttube",
+  "version": "1.0.0",
+  "description": "IntentTube is a web application designed to help users take control of their YouTube viewing habits by providing a focused environment for curated channels and playlists, free from distractions and recommendations.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "workspaces":[
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
+    "test": "npm run test --workspace=backend && npm run test --workspace=frontend",
+    "lint": "npm run lint --workspace=backend && npm run lint --workspace=frontend",
+    "backend": "npm run dev --workspace=backend",
+    "frontend": "npm run dev --workspace=frontend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amjadcp/IntentTube.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amjadcp/IntentTube/issues"
+  },
+  "homepage": "https://github.com/amjadcp/IntentTube#readme",
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

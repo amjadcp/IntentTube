@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import ChannelCard from './ChannelCard';
-import AddChannelPopup from './AddChannelPopup';
-import { ChannelsService } from './channels.service';
+import { useEffect, useState } from "react";
+import ChannelCard from "../components/channels/ChannelCard";
+import { ChannelsService } from "../services/channels.service";
+import AddChannelPopup from "@/components/channels/AddChannelPopup";
+import { ChannelListCard } from "@/components/channels/ChannelListCard";
 
 interface Channel {
   channelId: string;
@@ -9,7 +10,7 @@ interface Channel {
   thumbnail: string;
 }
 
-const ChannelsList: React.FC = () => {
+const ChannelsList = () => {
   const [channels, setChannels] = useState<Channel[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -26,8 +27,9 @@ const ChannelsList: React.FC = () => {
     try {
       const data = await ChannelsService.getCuratedChannels();
       setChannels(data.selectedChannels || []);
-    } catch (err: any) {
-      setError(err.message || 'Error fetching channels');
+    } catch (err: unknown) {
+      if (err instanceof Error)
+        setError(err.message || "Error fetching channels");
     } finally {
       setLoading(false);
     }
@@ -38,8 +40,9 @@ const ChannelsList: React.FC = () => {
     try {
       const data = await ChannelsService.removeChannel(channelId);
       setChannels(data.selectedChannels || []);
-    } catch (err: any) {
-      setError(err.message || 'Error removing channel');
+    } catch (err: unknown) {
+      if (err instanceof Error)
+        setError(err.message || "Error removing channel");
     } finally {
       setRemoving(null);
     }
@@ -53,7 +56,10 @@ const ChannelsList: React.FC = () => {
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Your Channels</h2>
-      <AddChannelPopup curatedChannels={channels} onChannelAdded={handleChannelAdded} />
+      <AddChannelPopup
+        curatedChannels={channels}
+        onChannelAdded={handleChannelAdded}
+      />
       {loading && <div>Loading...</div>}
       {error && <div className="text-red-500">{error}</div>}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -66,9 +72,18 @@ const ChannelsList: React.FC = () => {
         ))}
         {channels.length === 0 && !loading && <div>No channels added yet.</div>}
       </div>
-      {removing && <div className="text-gray-500 mt-2">Removing channel...</div>}
+      {removing && (
+        <div className="text-gray-500 mt-2">Removing channel...</div>
+      )}
+      <div className="grid grid-cols-3 gap-3 my-5">
+        {Array.from({ length: 6 }, (_, id) => (
+          <div key={id}>
+            <ChannelListCard />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default ChannelsList; 
+export default ChannelsList;

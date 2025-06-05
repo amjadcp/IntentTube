@@ -1,20 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import React from "react";
-import { AuthService } from "./auth.service";
+import React, { MouseEventHandler } from "react";
+import { AuthService } from "../../services/auth.service";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const handleGoogleSignIn = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+
+  const handleGoogleSignIn: MouseEventHandler<HTMLButtonElement> = () => {
+    console.log("button clicked");
     AuthService.loginWithGoogle();
   };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <form onSubmit={handleGoogleSignIn}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col items-center gap-2">
             <a
@@ -29,6 +30,7 @@ export function LoginForm({
           <div className="mx-auto">
             <Button
               type="submit"
+              onClick={handleGoogleSignIn}
               variant="outline"
               className="w-full cursor-pointer"
             >

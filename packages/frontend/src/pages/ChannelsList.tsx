@@ -18,7 +18,6 @@ const ChannelsList = () => {
 
   useEffect(() => {
     fetchChannels();
-    // eslint-disable-next-line
   }, []);
 
   const fetchChannels = async () => {
